@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reso_app/core/error/exceptions.dart';
 import 'package:reso_app/core/error/failures.dart';
@@ -10,22 +11,26 @@ import 'package:reso_app/features/number_trivia/data/models/number_trivia_model.
 import 'package:reso_app/features/number_trivia/data/repoistiores/number_trivia_repoistory_impl.dart';
 import 'package:reso_app/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:reso_app/features/number_trivia/domain/repositiores/number_trivia_repository.dart';
-
-class MockRemoteDataSource extends Mock
-    implements NumberTriviaRemoteDataSource {}
-
-class MocklocalDataSource extends Mock implements NumbeTriviaLocalDataSource {}
-
-class MockNetworkInfo extends Mock implements NetworkInfo {}
+//
+// class MockRemoteDataSource extends Mock
+//     implements NumberTriviaRemoteDataSource {}
+//
+// class MocklocalDataSource extends Mock implements NumbeTriviaLocalDataSource {}
+//
+// class MockNetworkInfo extends Mock implements NetworkInfo {}
+@GenerateNiceMocks([MockSpec<NumberTriviaRemoteDataSource>()])
+@GenerateNiceMocks([MockSpec<NumbeTriviaLocalDataSource>()])
+@GenerateNiceMocks([MockSpec<NetworkInfo>()])
+import 'number_trivia_repository_impl_test.mocks.dart';
 
 void main() {
   late NumberTriviaRepoistoryImpl numberTriviaRepoistoryImpl;
-  late MockRemoteDataSource mockRemoteDataSource;
-  late MocklocalDataSource mocklocalDataSource;
+  late MockNumberTriviaRemoteDataSource mockRemoteDataSource;
+  late NumbeTriviaLocalDataSource mocklocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
   setUp(() {
-    mockRemoteDataSource = MockRemoteDataSource();
-    mocklocalDataSource = MocklocalDataSource();
+    mockRemoteDataSource = MockNumberTriviaRemoteDataSource();
+    mocklocalDataSource = MockNumbeTriviaLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
     numberTriviaRepoistoryImpl = NumberTriviaRepoistoryImpl(
         numberTriviaRemoteDataSource: mockRemoteDataSource,
